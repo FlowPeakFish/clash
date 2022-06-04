@@ -22,6 +22,16 @@ dns:
     - "*.local"
     - "*.msftncsi.com"
     - "*.msftconnecttest.com"
+proxy-providers:
+  Lonxin:
+    type: http
+    url: https://fq.lonxin.net/clash/proxies?type=ss,ssr,trojan&nc=CN
+    interval: 3600
+    path: sub/Lonxin.yaml
+    health-check:
+      enable: true
+      interval: 600
+      url: http://www.gstatic.com/generate_204
 rule-providers:
   Reject:
     type: http
@@ -101,3 +111,81 @@ rule-providers:
     url: https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Steam/Steam.yaml
     path: ./ruleset/Steam.yaml
     interval: 28800
+proxy-groups:
+  - name: 🚀 节点选择
+    type: select
+    proxies:
+      - 🔯 故障转移
+      - ♻️ 自动选择
+      - 🔮 负载均衡
+  - name: 🔯 故障转移
+    type: fallback
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+    use:
+      - Lonxin
+  - name: ♻️ 自动选择
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+    use:
+      - Lonxin
+  - name: 🔮 负载均衡
+    type: load-balance
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+    use:
+      - Lonxin
+  - name: 🛑 广告拦截
+    type: select
+    proxies:
+      - REJECT
+      - 🎯 全球直连
+  - name: 🛡️ 隐私防护
+    type: select
+    proxies:
+      - REJECT
+      - 🎯 全球直连
+  - name: 🎯 全球直连
+    type: select
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+  - name: Ⓜ️ 微软服务
+    type: select
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+  - name: 🍎 苹果服务
+    type: select
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+  - name: 🎮 游戏平台
+    type: select
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+  - name: 🐟 漏网之鱼
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - 🎯 全球直连
+rules:
+ - RULE-SET,Reject,🛑 广告拦截
+ - RULE-SET,Privacy,🛡️ 隐私防护
+ - RULE-SET,Lan,🎯 全球直连
+ - RULE-SET,China,🎯 全球直连
+ - RULE-SET,Direct,🎯 全球直连
+ - RULE-SET,Alibaba,🎯 全球直连
+ - RULE-SET,Download,🎯 全球直连
+ - RULE-SET,Microsoft,Ⓜ️ 微软服务
+ - RULE-SET,OneDrive,Ⓜ️ 微软服务
+ - RULE-SET,Apple,🍎 苹果服务
+ - RULE-SET,iCloud,🍎 苹果服务
+ - RULE-SET,Epic,🎮 游戏平台
+ - RULE-SET,Steam,🎮 游戏平台
+ - MATCH,🐟 漏网之鱼
