@@ -25,7 +25,7 @@ dns:
 proxy-providers:
   Lonxin:
     type: http
-    url: https://fq.lonxin.net/clash/proxies?type=ss,ssr,trojan&nc=CN
+    url: https://fq.lonxin.net/clash/proxies?type=ss,ssr,trojan&nc=CN&filter=3
     interval: 3600
     path: sub/Lonxin.yaml
     health-check:
