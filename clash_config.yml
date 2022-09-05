@@ -23,9 +23,9 @@ dns:
     - "*.msftncsi.com"
     - "*.msftconnecttest.com"
 proxy-providers:
-  Lonxin:
+  Herokuapp:
     type: http
-    url: https://fq.lonxin.net/clash/proxies?type=ss,ssr,trojan&nc=CN&filter=3
+    url: https://sspool.herokuapp.com/clash/proxies?type=ss,ssr,trojan&nc=CN&filter=3
     interval: 3600
     path: sub/Lonxin.yaml
     health-check:
@@ -124,21 +124,21 @@ proxy-groups:
     interval: 300
     tolerance: 50
     use:
-      - Lonxin
+      - Herokuapp
   - name: ♻️ 自动选择
     type: url-test
     url: http://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
     use:
-      - Lonxin
+      - Herokuapp
   - name: 🔮 负载均衡
     type: load-balance
     url: http://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
     use:
-      - Lonxin
+      - Herokuapp
   - name: 🛑 广告拦截
     type: select
     proxies:
